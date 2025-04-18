@@ -132,25 +132,67 @@
    </section>
 
    <section class="contato">
-        <div class="contato__descrição">
-            <h2 class="contato__titulo">Fale conosco!</h2>
-            <p class="contato__texto">Tem alguma dúvida, sugestão ou precisa de ajuda? Entre em contato!</p>
-        </div>
-        <form action="">
-            <label for="contato__nome">Nome completo</label>
-            <input type="text" id="contato__nome" class="contato__input" placeholder="Digite seu nome..." required>
-            <br>
-            <label for="contato__email">Email</label>
-            <br>
-            <input type="email" id="contato__email" class="contato__input" placeholder="Seuemail@exemplo.com.br" required>
-            
-            <label for="contato__mensagem">Mensagem</label>
-            <textarea cols="70" rows="10" id="contato__mensagem" class="contato__input" placeholder="Digite sua mensagem aqui..." required></textarea>
-            
-            <input type="submit" value="Enviar" class="enviar">
-        </form>
-        
-   </section>
+    <div class="contato__descrição">
+        <h2 class="contato__titulo">Fale conosco!</h2>
+        <p class="contato__texto">Tem alguma dúvida, sugestão ou precisa de ajuda? Entre em contato!</p>
+    </div>
+
+    <form id="formContato" action="https://formsubmit.co/itatibale@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_redirect" value="true">
+
+        <label for="contato__nome">Nome completo</label>
+        <input type="text" id="contato__nome" name="nome" class="contato__input" placeholder="Digite seu nome..." required>
+
+        <label for="contato__email">Email</label>
+        <input type="email" id="contato__email" name="email" class="contato__input" placeholder="Seuemail@exemplo.com.br" required>
+
+        <label for="contato__mensagem">Mensagem</label>
+        <textarea cols="70" rows="10" id="contato__mensagem" name="mensagem" class="contato__input" placeholder="Digite sua mensagem aqui..." required></textarea>
+
+        <input type="submit" value="Enviar" class="enviar">
+        <section class="mensagem-positivo">
+            <div id="mensagemSucesso" class="mensagem-oculta">
+                <span class="icone">✅</span>
+                <p>Sua mensagem foi enviada com sucesso!</p>
+            </div>
+            </section>
+    </form>
+
+    <!-- MENSAGEM DE SUCESSO -->
+    
+</section>
+
+<script>
+    const form = document.getElementById('formContato');
+    const mensagem = document.getElementById('mensagemSucesso');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const dados = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: dados,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                form.reset();
+                mensagem.style.display = 'flex';
+            } else {
+                alert('Erro ao enviar. Tente novamente.');
+            }
+        })
+        .catch(error => {
+            alert('Erro de conexão. Verifique sua internet.');
+        });
+    });
+</script>
 
    <footer class="rodape">
         <div class="logoRodape">
